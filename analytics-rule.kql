@@ -1,0 +1,13 @@
+// ============================================================
+// PowerShell Suspicious Web Request - Sentinel Analytics Rule
+// Source: Microsoft Defender for Endpoint (DeviceProcessEvents)
+// Fires when PowerShell downloads remote content via Invoke-WebRequest.
+// Note: hostname sanitized. Replace with your real value when running.
+// ============================================================
+
+let TargetDevice = "WIN-TARGET-01";
+DeviceProcessEvents
+| where DeviceName == TargetDevice
+| where FileName == "powershell.exe"
+| where ProcessCommandLine contains "Invoke-WebRequest"
+| order by TimeGenerated
